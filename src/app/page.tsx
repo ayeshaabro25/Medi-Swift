@@ -3,11 +3,11 @@
 import Head from "next/head";
 import { useState } from "react";
 import Image from "next/image";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-import ProductCard from "./components/productsCard";
-import SearchBar from "./components/SearchBar";
-import Category from "./components/Category";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import ProductCard from "../components/productsCard";
+import SearchBar from "../components/SearchBar";
+import Category from "../components/Category";
 
 const HomePage = () => {
   const products = [
