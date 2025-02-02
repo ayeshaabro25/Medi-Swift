@@ -1,7 +1,7 @@
-"use client"; 
+"use client";
 
 import { useState, useEffect } from "react";
-
+import Image from "next/image";
 
 const sampleProducts = [
   { name: "Tablets", description: "High-quality medicine.", image: "/images/product-1.jpg" },
@@ -13,15 +13,20 @@ export default function Wishlist() {
   const [wishlist, setWishlist] = useState<string[]>([]);
 
   useEffect(() => {
-    const storedWishlist = JSON.parse(localStorage.getItem("wishlist") || "[]");
-    setWishlist(storedWishlist);
+    if (typeof window !== "undefined") {
+      const storedWishlist = JSON.parse(localStorage.getItem("wishlist") || "[]");
+      setWishlist(storedWishlist);
+    }
   }, []);
 
   const addToWishlist = (item: string) => {
     setWishlist((prevWishlist) => {
-      const updatedWishlist = [...prevWishlist, item];
-      localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
-      return updatedWishlist;
+      if (!prevWishlist.includes(item)) {
+        const updatedWishlist = [...prevWishlist, item];
+        localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
+        return updatedWishlist;
+      }
+      return prevWishlist;
     });
   };
 
@@ -38,12 +43,13 @@ export default function Wishlist() {
       <h2 className="text-4xl font-bold text-gray-800 text-center mb-8">Your Wishlist</h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        
         {sampleProducts.map((product, index) => (
           <div key={index} className="border p-4 rounded-md shadow-md">
-            <img
+            <Image
               src={product.image}
               alt={product.name}
+              width={300}
+              height={200}
               className="w-full h-40 object-cover mb-4 rounded-md"
             />
             <h3 className="text-xl font-semibold">{product.name}</h3>
