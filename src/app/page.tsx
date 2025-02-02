@@ -1,8 +1,8 @@
-// src/app/page.tsx
 'use client';
 
 import Head from "next/head";
 import { useState } from "react";
+import Image from "next/image";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import ProductCard from "./components/productsCard";
@@ -19,7 +19,7 @@ const HomePage = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredProducts, setFilteredProducts] = useState(products);
 
-  
+  // Handles search input change
   const handleSearch = (query: string) => {
     setSearchQuery(query);
 
@@ -56,7 +56,7 @@ const HomePage = () => {
 
             {/* Search Bar */}
             <div className="mt-8">
-              <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+              <SearchBar searchQuery={searchQuery} setSearchQuery={handleSearch} />
             </div>
 
             <a
@@ -77,18 +77,16 @@ const HomePage = () => {
         <section className="container mx-auto py-12 px-6">
           <h2 className="text-3xl font-semibold text-gray-800 text-center mb-8">Our Services</h2>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            <div className="bg-white rounded-lg shadow-md p-6 transition-transform transform hover:scale-105">
-              <h3 className="text-lg font-bold text-gray-700">Fast Delivery</h3>
-              <p className="mt-2 text-gray-600">Get your orders delivered in under 30 minutes!</p>
-            </div>
-            <div className="bg-white rounded-lg shadow-md p-6 transition-transform transform hover:scale-105">
-              <h3 className="text-lg font-bold text-gray-700">Wide Range of Products</h3>
-              <p className="mt-2 text-gray-600">Medicines, wellness products, and more at your fingertips.</p>
-            </div>
-            <div className="bg-white rounded-lg shadow-md p-6 transition-transform transform hover:scale-105">
-              <h3 className="text-lg font-bold text-gray-700">Reliable Service</h3>
-              <p className="mt-2 text-gray-600">Trust us to deliver high-quality healthcare essentials.</p>
-            </div>
+            {[
+              { title: "Fast Delivery", text: "Get your orders delivered in under 30 minutes!" },
+              { title: "Wide Range of Products", text: "Medicines, wellness products, and more at your fingertips." },
+              { title: "Reliable Service", text: "Trust us to deliver high-quality healthcare essentials." },
+            ].map((service, index) => (
+              <div key={index} className="bg-white rounded-lg shadow-md p-6 transition-transform transform hover:scale-105">
+                <h3 className="text-lg font-bold text-gray-700">{service.title}</h3>
+                <p className="mt-2 text-gray-600">{service.text}</p>
+              </div>
+            ))}
           </div>
         </section>
 
